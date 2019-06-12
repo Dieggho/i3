@@ -1,0 +1,55 @@
+#!/bin/bash
+
+
+OPTIONS="\
+ Move to Workspace\n\
+----------------------------------------\n\
+ Full Screen\n\
+ Floating mode\n\
+----------------------------------------\n\
+ Tabbed mode\n\
+ Split mode\n\
+----------------------------------------\n\
+ Split Horizontally\n\
+ Split Vertically\n\
+----------------------------------------\n\
+ Close"
+
+LAUNCHER="rofi -hide-scrollbar -m -3 -width 13 -dmenu -i -p i3-Actions: "
+
+option=`echo -e $OPTIONS | $LAUNCHER | awk '{print $1}' | tr -d '\r\n'`
+if [ ${#option} -gt 0 ]
+then
+    case $option in
+      Exit)
+        eval $1
+        ;;
+             )
+        sleep 0.1; /home/$USER/.i3/i3-actions/i3-move-apps
+        ;;
+             )
+        sleep 0.1; i3-msg fullscreen toggle
+        ;;
+            )
+        sleep 0.1; i3-msg floating toggle
+        ;;
+            )
+        sleep 0.1; i3-msg layout tabbed
+        ;;
+            )
+        sleep 0.1; i3-msg layout toggle split
+        ;;
+             )
+        sleep 0.1; i3-msg split h
+        ;;
+             )
+        sleep 0.1; i3-msg split v
+        ;;
+             )
+        sleep 0.1; i3-msg kill
+        ;;
+      *)
+        ;;
+    esac
+fi
+
